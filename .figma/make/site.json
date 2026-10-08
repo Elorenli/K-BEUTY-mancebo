@@ -1,0 +1,10 @@
+{
+  "description": "Offers a responsive Korean skincare website in Spanish with user login, admin area, and sections for services, portfolio, and contact to enhance user engagement.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
