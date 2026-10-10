@@ -1,0 +1,119 @@
+.topline { min-height: 34px; padding: 9px 5vw; display: flex; justify-content: space-between; gap: 18px; background: var(--ink); color: #f7f7f1; font-size: 8px; font-weight: 600; letter-spacing: .13em; }
+
+.topline span:last-child { color: #c9d59e; }
+
+.site-header { height: 76px; padding: 0 max(5vw, calc((100vw - 1320px) / 2)); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 20; background: #fbfaf7f5; border-bottom: 1px solid #eaebe5; backdrop-filter: blur(14px); }
+
+.school-logo { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.school-logo-mark { width: 38px; height: 38px; display: grid; place-items: center; background: var(--green-dark); color: white; font-family: "Playfair Display", serif; font-size: 13px; font-weight: 600; }
+
+.school-logo-copy { display: grid; gap: 3px; }
+
+.school-logo-copy b { font-size: 13px; letter-spacing: .12em; }
+
+.school-logo-copy small { color: var(--muted); font-size: 8px; }
+
+.main-nav { display: flex; align-items: center; gap: clamp(15px, 2.1vw, 28px); }
+
+.main-nav a, .header-cta { font-size: 10px; font-weight: 600; }
+
+.main-nav a:hover, .site-footer a:hover { color: var(--green-dark); }
+
+.header-cta { display: flex; align-items: center; gap: 9px; padding: 12px 14px; background: var(--ink); color: #fff; }
+
+.header-cta svg, .button svg, .service-card a svg, .map-card>a svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+.menu-button { display: none; }
+
+.hero { min-height: 570px; display: grid; grid-template-columns: 49% 51%; background: var(--cream); overflow: hidden; }
+
+.hero-copy { align-self: center; padding: 76px 5vw 76px max(5vw, calc((100vw - 1320px) / 2)); }
+
+.hero-text { max-width: 475px; margin: 23px 0; color: #596159; font-size: 13px; line-height: 1.8; }
+
+.hero-actions { display: flex; align-items: center; gap: 23px; flex-wrap: wrap; }
+
+.button-dark:hover, .header-cta:hover { background: var(--green-dark); }
+
+.hero-visual { min-height: 570px; position: relative; background: #d8d7c9; }
+
+.hero-visual>img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 56%; filter: saturate(.72); }
+
+.hero-note { position: absolute; left: 25px; bottom: 25px; padding: 13px 16px; display: grid; gap: 7px; background: #fbfaf7f2; box-shadow: 0 8px 25px #1720191c; }
+
+.hero-note span { color: var(--green-dark); font-size: 7px; font-weight: 700; letter-spacing: .14em; }
+
+.hero-note b { font-family: "Playfair Display", serif; font-size: 15px; font-weight: 500; }
+
+.hero-stamp { position: absolute; top: 27px; right: 27px; width: 82px; height: 82px; display: grid; place-content: center; border: 1px solid #ffffffb0; border-radius: 50%; color: white; text-align: center; font-size: 8px; line-height: 1.6; letter-spacing: .1em; }
+
+.course-strip { padding: 27px max(5vw, calc((100vw - 1320px) / 2)); display: grid; grid-template-columns: .8fr 1.25fr 1.6fr 1.15fr; gap: 25px; background: #202a24; color: white; }
+
+.course-strip>div { display: grid; align-content: start; gap: 8px; padding-left: 16px; border-left: 1px solid #566057; }
+
+.course-strip>div:first-child { padding-left: 0; border: 0; }
+
+.course-strip span, .contact-detail span { color: #c6d29c; font-size: 7px; font-weight: 700; letter-spacing: .12em; }
+
+.course-strip b { font-size: 9px; font-weight: 500; line-height: 1.6; }
+
+.section { padding: 88px max(5vw, calc((100vw - 1200px) / 2)); }
+
+.section-heading { display: grid; grid-template-columns: 1fr 350px; align-items: end; gap: 45px; margin-bottom: 40px; }
+
+.section-heading h2, .contact-copy h2 { font-size: clamp(36px, 4vw, 54px); }
+
+.section-heading>p { margin: 0 0 4px; padding-bottom: 4px; color: var(--muted); font-size: 11px; line-height: 1.85; }
+
+.contact-section { padding: 80px max(5vw, calc((100vw - 1200px) / 2)); display: grid; grid-template-columns: 1fr 1fr; gap: 12%; background: #202a24; color: white; }
+
+.site-footer { padding: 30px max(5vw, calc((100vw - 1200px) / 2)) 17px; background: #171f1a; color: white; }
+
+.footer-main { display: grid; grid-template-columns: 1fr 1fr 1.5fr; align-items: center; gap: 24px; padding-bottom: 24px; }
+
+.footer-logo .school-logo-copy small { color: #aeb7ae; }
+
+.footer-main>p { margin: 0; color: #f1f1e9; font-family: "Playfair Display", serif; font-size: 15px; line-height: 1.6; }
+
+.footer-main>p span { color: #aeb7ae; font-family: "DM Sans", sans-serif; font-size: 8px; }
+
+.footer-main nav { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 14px; }
+
+.footer-main nav a { color: #d1d7cf; font-size: 8px; }
+
+.footer-main nav button { padding: 0; border: 0; background: transparent; color: #d1d7cf; font-size: 8px; cursor: pointer; }
+
+.footer-main nav button:hover { color: #c6d29c; }
+
+.footer-bottom { padding: 14px 0; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 9px 20px; border-top: 1px solid #414a42; color: #c0c7bf; font-size: 8px; }
+
+.footer-disclaimer { display: block; padding-top: 9px; color: #929b92; font-size: 8px; }
+
+.admin-shell { min-height: 100vh; display: grid; grid-template-columns: 230px minmax(0, 1fr); background: #f4f5f1; color: var(--ink); }
+
+.admin-sidebar { min-height: 100vh; padding: 25px 17px; display: flex; flex-direction: column; background: #202a24; color: white; }
+
+.admin-logo { margin-bottom: 37px; }
+
+.admin-logo .school-logo-copy small { color: #bdc5bc; }
+
+.admin-nav-title { margin: 0 9px 10px; color: #aeb7ae; font-size: 8px; font-weight: 700; letter-spacing: .13em; }
+
+.admin-sidebar nav { display: grid; gap: 5px; }
+
+.admin-sidebar nav button { padding: 11px 10px; border: 0; background: transparent; color: #d1d7cf; text-align: left; font-size: 10px; cursor: pointer; }
+
+.admin-sidebar nav button:hover, .admin-sidebar nav button.active { background: #344239; color: #dce5c5; }
+
+.admin-exit { margin-top: auto; padding: 14px 8px 0; border: 0; border-top: 1px solid #465149; background: transparent; color: white; text-align: left; font-size: 9px; cursor: pointer; }
+
+.admin-main { min-width: 0; }
+
+.admin-heading { min-height: 100px; padding: 20px clamp(20px, 4vw, 54px); display: flex; align-items: center; justify-content: space-between; gap: 20px; background: white; border-bottom: 1px solid var(--line); }
+
+.admin-heading .eyebrow { margin-bottom: 7px; }
+
+.admin-heading h1 { font-size: 31px; letter-spacing: -.03em; }
+
+.admin-content { padding: 27px clamp(20px, 4vw, 54px) 55px; }

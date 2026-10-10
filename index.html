@@ -1,18 +1,29 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <!-- figma:head-start -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fbfcf8" />
-    <meta name="description" content="Descubre Seoul Glow: cosmética coreana seleccionada, rutinas de cuidado facial y productos para cada momento de tu piel." />
-    <title>Seoul Glow | Cosmética coreana para tu piel</title>
-    <!-- figma:head-end -->
+    <meta name="theme-color" content="#202a24" />
+    <meta name="description" content="Proyecto estudiantil sobre recomendaciones de skincare coreano y desarrollo web del Instituto Politécnico Industrial Don Bosco." />
+    <title>Skincare coreano | Proyecto estudiantil IPIDB</title>
+    <link rel="stylesheet" href="./src/styles/index.css" />
   </head>
   <body>
-    <!-- figma:body-start -->
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <!-- figma:body-end -->
+    <div id="site-view">
+      <div data-partial="header"></div>
+      <main>
+        <div data-partial="home"></div>
+        <div data-partial="about"></div>
+        <div data-partial="services"></div>
+        <div data-partial="portfolio"></div>
+        <div data-partial="resources"></div>
+        <div data-partial="events"></div>
+        <div data-partial="contact"></div>
+      </main>
+      <div data-partial="footer"></div>
+    </div>
+    <div data-partial="general"></div>
+    <div id="admin-view" hidden></div>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>

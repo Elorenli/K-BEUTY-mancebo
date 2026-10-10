@@ -1,0 +1,31 @@
+<div class="admin-modal-backdrop" id="admin-login-overlay" hidden>
+  <section class="admin-login-card" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
+    <button class="admin-modal-close" id="close-admin" type="button" aria-label="Cerrar">×</button>
+    <p class="eyebrow">ACCESO ADMINISTRATIVO</p><h2 id="admin-login-title">Panel de demostración</h2>
+    <p>Este acceso es solo una simulación local. No protege el sitio ni sustituye un inicio de sesión real en el servidor.</p>
+    <form class="admin-form" id="admin-login-form">
+      <label>Correo<input name="username" type="email" autocomplete="username" required placeholder="admin@ipidb.edu.do" /></label>
+      <label>Contraseña<input name="password" type="password" autocomplete="current-password" required placeholder="Contraseña de demostración" /></label>
+      <p class="admin-error" id="login-error" role="alert" hidden></p>
+      <button class="admin-primary" type="submit">Entrar al panel</button>
+    </form>
+    <small class="admin-demo-credentials">Acceso de prueba: <b>admin@ipidb.edu.do</b> · <b>demo1234</b></small>
+  </section>
+</div>
+<template id="recommendation-template">
+  <article class="recommendation-card">
+    <figure class="recommendation-image"><img loading="lazy" /><span class="product-number"></span></figure>
+    <div class="recommendation-copy">
+      <small class="product-category"></small><h3 class="product-title"></h3><p class="product-description"></p>
+      <details class="product-details">
+        <summary>Ver ficha educativa</summary>
+        <div class="product-facts">
+          <div><b>Contenido y características</b><p class="product-content"></p></div>
+          <div><b>Modo de uso</b><p class="product-use"></p></div>
+          <div class="product-pros-cons"><p><b>Ventajas</b><br /><span class="product-advantages"></span></p><p><b>A tener en cuenta</b><br /><span class="product-disadvantages"></span></p></div>
+          <a class="product-official-link" target="_blank" rel="noreferrer">Consultar en la web oficial <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></a>
+        </div>
+      </details>
+    </div>
+  </article>
+</template>
