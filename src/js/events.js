@@ -5,9 +5,9 @@ export const articles = [
 ];
 
 const events = [
-  { activity: "Actividad 1.1 · Maquetación HTML", date: "02/10/2025", status: "Fecha indicada en la planificación" },
-  { activity: "Práctica individual y revisión de enlaces e imágenes", date: "Según planificación de clase", status: "Actividad formativa" },
-  { activity: "Exposición y retroalimentación", date: "Según planificación de clase", status: "Por coordinar con el docente" },
+  { activity: "Actividad 1.1 · Maquetación HTML", date: "2025-10-02", type: "Entrega / actividad", status: "Fecha indicada en la planificación" },
+  { activity: "Práctica individual y revisión de enlaces e imágenes", date: null, type: "Actividad formativa", status: "Según planificación de clase" },
+  { activity: "Exposición y retroalimentación", date: null, type: "Exposición", status: "Por coordinar con el docente" },
 ];
 
 function escapeHtml(value) {
@@ -27,8 +27,73 @@ export function renderArticles(items = articles) {
   `).join("");
 }
 
-export function renderEvents() {
-  document.querySelector("#events-body").innerHTML = events.map((event) => `
-    <tr><td>${escapeHtml(event.activity)}</td><td>${escapeHtml(event.date)}</td><td>${escapeHtml(event.status)}</td></tr>
+function formatEventDate(date) {
+  if (!date) return "Por confirmar";
+  const parsedDate = new Date(`${date}T12:00:00`);
+  return Number.isNaN(parsedDate.getTime())
+    ? "Por confirmar"
+    : parsedDate.toLocaleDateString("es-DO", { day: "2-digit", month: "2-digit", year: "numeric" });
+}
+
+export function renderEvents(items = events) {
+  const status = document.querySelector("#events-status");
+  if (!items.length) {
+    status.textContent = "El calendario todavía no tiene actividades registradas.";
+    document.querySelector("#events-body").replaceChildren();
+    return;
+  }
+  status.textContent = "";
+  document.querySelector("#events-body").innerHTML = items.map((event) => `
+    <tr><td>${escapeHtml(event.activity)}</td><td>${escapeHtml(formatEventDate(event.date))}</td><td>${escapeHtml(event.type)}</td><td>${escapeHtml(event.status)}</td></tr>
   `).join("");
+}
+
+export async function loadEventsFromApi() {
+  const status = document.querySelector("#events-status");
+
+  try {
+    const response = await fetch(`${import.meta.env.BASE_URL}api/eventos.php`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error("La API devolvió un formato inesperado.");
+
+    renderEvents(data.map((event) => ({
+      activity: event.titulo,
+      date: event.fecha || null,
+      type: event.tipo,
+      status: event.descripcion || "Actividad académica",
+    })));
+    return true;
+  } catch (error) {
+    console.error("No se pudo cargar el calendario desde la API PHP.", error);
+    renderEvents();
+    status.textContent = "No se pudo conectar con el calendario de la base de datos. Se muestran las actividades de ejemplo.";
+    return false;
+  }
+}
+
+export function initVideoPreview() {
+  const input = document.querySelector("#project-video-file");
+  const video = document.querySelector("#project-video");
+  const status = document.querySelector("#video-status");
+  let previewUrl;
+
+  input.addEventListener("change", () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("video/")) {
+      status.textContent = "Selecciona un archivo de video compatible.";
+      input.value = "";
+      return;
+    }
+
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    previewUrl = URL.createObjectURL(file);
+    video.src = previewUrl;
+    video.load();
+    status.textContent = `Previsualizando: ${file.name}. El archivo no se ha subido.`;
+  });
 }

@@ -53,6 +53,7 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .topline span:first-child { display: none; }
   .site-header { height: 68px; padding: 0 5%; }
   .school-logo-mark { width: 34px; height: 34px; }
+  .school-logo-image { width: 36px; height: 36px; }
   .header-cta { display: none; }
   .menu-button { width: 38px; height: 38px; display: flex; flex-direction: column; justify-content: center; gap: 5px; border: 0; background: transparent; }
   .menu-button span { width: 20px; height: 1px; background: var(--ink); }
@@ -75,6 +76,8 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .service-card { min-height: 205px; border-right: 0; border-bottom: 1px solid #d9ddd1; }
   .service-card:last-child { border-bottom: 0; }
   .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 22px 14px; }
+  .image-gallery { grid-template-columns: 1fr 1fr; gap: 16px 12px; }
+  .image-gallery figure { height: clamp(170px, 42vw, 250px); }
   .recommendation-image { height: clamp(200px, 44vw, 300px); }
   .recommendation-card:last-child { grid-column: 1 / -1; }
   .recommendation-card:last-child .recommendation-image { height: 300px; }
@@ -84,6 +87,7 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .shopping-steps { grid-template-columns: 1fr; }
   .shopping-guide { padding: 19px; }
   .media-map-grid { grid-template-columns: 1fr; }
+  .location-panel { grid-template-columns: 1fr; gap: 12px; padding: 18px; }
   .contact-section { padding: 60px 7%; grid-template-columns: 1fr; gap: 30px; }
   .footer-main { grid-template-columns: 1fr 1fr; gap: 18px; }
   .footer-main nav { grid-column: 1 / -1; justify-content: flex-start; }
@@ -111,10 +115,10 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .course-strip { grid-template-columns: 1fr; }
   .course-strip>div, .course-strip>div:nth-child(3) { padding-left: 11px; border-left: 1px solid #566057; }
   .portfolio-grid { grid-template-columns: 1fr; }
+  .image-gallery { grid-template-columns: 1fr; }
+  .image-gallery figure { height: 250px; }
   .recommendation-card:last-child { grid-column: auto; }
   .recommendation-image, .recommendation-card:last-child .recommendation-image { height: 310px; }
-  .gallery-project { grid-template-columns: 1fr; gap: 15px; }
-  .gallery-collage { height: 230px; }
   .events-table-wrap th, .events-table-wrap td { min-width: 125px; padding: 11px; }
   .footer-main { grid-template-columns: 1fr; }
   .footer-main nav { grid-column: auto; }

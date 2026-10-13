@@ -17,7 +17,7 @@ const initialProducts = [
     category: "HIDRATACIÓN",
     title: "SKIN1004 Madagascar Centella Ampoule",
     description: "Ampoule ligera con centella asiática para complementar la hidratación.",
-    image: "https://images.unsplash.com/photo-1688380353667-a6d3ddb85600?auto=format&fit=crop&w=900&q=85",
+    image: "./images/SKIN1004.png",
     alt: "Ampoule coreana de centella asiática",
     content: "Presentación habitual de 100 ml. Su lista INCI comienza con agua, glicerina, butylene glycol y extracto de Centella asiatica.",
     advantages: "Textura ligera y lista de ingredientes breve; se puede combinar con una crema hidratante.",
@@ -37,6 +37,32 @@ const initialProducts = [
     disadvantages: "Contiene fragancia y componentes aromáticos; puede no ser la mejor opción para personas sensibles a estos ingredientes.",
     use: "Como último paso de la rutina de mañana, aplica una cantidad generosa y uniforme antes de la exposición solar. Reaplica según las indicaciones del envase, especialmente después de sudar, nadar o secarte.",
     officialUrl: "https://www.cosrx.com/products/aloe-soothing-sun-cream-spf50-pa",
+  },
+  {
+    number: "04",
+    category: "TÓNICO",
+    title: "Anua Heartleaf 77% Soothing Toner",
+    description: "Tónico de heartleaf para complementar una rutina de hidratación.",
+    image: "./images/Anua 🫧 🎀.jfif",
+    alt: "Tónico Anua Heartleaf 77%",
+    content: "Revisa la lista de ingredientes y las instrucciones del envase antes de usarlo.",
+    advantages: "Formato de tónico fácil de integrar en una rutina sencilla.",
+    disadvantages: "Los extractos vegetales pueden causar sensibilidad individual.",
+    use: "Aplica sobre la piel limpia siguiendo las instrucciones del fabricante.",
+    officialUrl: "https://anua.com/",
+  },
+  {
+    number: "05",
+    category: "SÉRUM",
+    title: "The Ordinary Niacinamide 10% + Zinc 1%",
+    description: "Sérum de niacinamida incluido en la galería de productos del proyecto.",
+    image: "./images/The Ordinary Niacinamide 10% + Zinc 1%, Smoothing Serum for Blemish-Prone Skin_.jfif",
+    alt: "Sérum The Ordinary Niacinamide 10% + Zinc 1%",
+    content: "Fórmula con niacinamida y zinc. Consulta el envase para confirmar ingredientes y concentración.",
+    advantages: "Su etiqueta permite practicar la lectura y comparación de ingredientes.",
+    disadvantages: "La niacinamida puede no ser adecuada para todas las pieles; suspende su uso si causa irritación.",
+    use: "Sigue las instrucciones del fabricante y prueba el producto en una zona pequeña antes de incorporarlo a la rutina.",
+    officialUrl: "https://theordinary.com/",
   },
 ];
 
@@ -62,6 +88,40 @@ export function setProducts(nextProducts) {
   products = nextProducts;
 }
 
+export async function loadProductsFromApi() {
+  const status = document.querySelector("#products-status");
+
+  try {
+    const response = await fetch(`${import.meta.env.BASE_URL}api/productos.php`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error("La API devolvió un formato inesperado.");
+
+    const databaseProducts = data.map((product, index) => ({
+      ...product,
+      number: String(product.id).padStart(2, "0"),
+      category: product.categoria,
+      title: product.nombre,
+      alt: `Producto ${product.nombre}`,
+      image: product.imagen || initialProducts[index % initialProducts.length].image,
+      source: "database",
+    }));
+
+    setProducts(databaseProducts);
+    status.textContent = databaseProducts.length
+      ? ""
+      : "El catálogo de la base de datos todavía no tiene productos.";
+    return true;
+  } catch (error) {
+    console.error("No se pudo cargar el catálogo desde la API PHP.", error);
+    status.textContent = "No se pudo conectar con el catálogo de la base de datos. Se muestran recomendaciones de ejemplo.";
+    return false;
+  }
+}
+
 export function renderRecommendations(items = products) {
   const grid = document.querySelector("#recommendations-grid");
   const template = document.querySelector("#recommendation-template");
@@ -73,6 +133,21 @@ export function renderRecommendations(items = products) {
     card.querySelector(".product-category").textContent = product.category;
     card.querySelector(".product-title").textContent = product.title;
     card.querySelector(".product-description").textContent = product.description;
+
+    const databaseDetails = card.querySelector(".database-product-details");
+    if (product.source === "database") {
+      card.querySelector(".product-details").hidden = true;
+      databaseDetails.hidden = false;
+      card.querySelector(".database-product-brand").textContent = `Marca: ${product.marca}`;
+      card.querySelector(".database-product-brand").hidden = false;
+      card.querySelector(".database-product-price").textContent = `Precio: $${Number(product.precio).toFixed(2)}`;
+      card.querySelector(".database-product-price").hidden = false;
+      card.querySelector(".database-product-skin").textContent = product.tipoPiel || "No especificado";
+      card.querySelector(".database-product-ingredients").textContent = product.ingredientes || "No especificados";
+      card.querySelector(".database-product-stock").textContent = `${product.stock} unidades`;
+      return card;
+    }
+
     card.querySelector(".product-content").textContent = product.content;
     card.querySelector(".product-use").textContent = product.use;
     card.querySelector(".product-advantages").textContent = product.advantages;

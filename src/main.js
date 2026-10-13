@@ -1,16 +1,18 @@
 import { loadPartials } from "./js/partials.js";
 import { initNavigation } from "./js/navigation.js";
-import { renderRecommendations } from "./js/products.js";
-import { renderArticles, renderEvents } from "./js/events.js";
+import { loadProductsFromApi, renderRecommendations } from "./js/products.js";
+import { initVideoPreview, loadEventsFromApi, renderArticles } from "./js/events.js";
 import { initContactForm } from "./js/contact-form.js";
 import { initAdmin } from "./js/admin.js";
 
 async function init() {
   await loadPartials();
   initNavigation();
+  await loadProductsFromApi();
   renderRecommendations();
   renderArticles();
-  renderEvents();
+  await loadEventsFromApi();
+  initVideoPreview();
   initContactForm();
   initAdmin();
 }
