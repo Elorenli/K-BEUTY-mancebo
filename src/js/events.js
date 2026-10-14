@@ -1,3 +1,5 @@
+import { apiRequest } from "./api.js";
+
 export const articles = [
   { tag: "HTML", title: "Una web clara empieza con buena estructura", text: "Usar etiquetas como header, nav, main y section ayuda a organizar el contenido y facilita la navegación." },
   { tag: "DISEÑO RESPONSIVE", title: "Diseñar para móvil también es diseñar para todos", text: "Una presentación que se adapta a distintos tamaños hace que las recomendaciones sean fáciles de consultar." },
@@ -25,6 +27,19 @@ export function renderArticles(items = articles) {
       <p>${escapeHtml(article.text)}</p>
     </article>
   `).join("");
+}
+
+export async function loadNewsFromApi() {
+  try {
+    const data = await apiRequest("noticias.php");
+    if (!Array.isArray(data)) throw new Error("La API devolvió un formato inesperado.");
+    renderArticles(data);
+    return data;
+  } catch (error) {
+    console.error("No se pudo cargar el contenido editorial desde la API.", error);
+    renderArticles();
+    return articles;
+  }
 }
 
 function formatEventDate(date) {

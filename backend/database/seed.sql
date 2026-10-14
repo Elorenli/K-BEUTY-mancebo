@@ -1,3 +1,5 @@
+SET NAMES utf8mb4;
+
 USE seoul_glow;
 
 INSERT INTO marcas (id, nombre, pais) VALUES
@@ -46,7 +48,7 @@ INSERT INTO productos (
     5, 'Niacinamide 10% + Zinc 1%', 105, 5, 12.00, 30, 'Mixta o grasa',
     'Niacinamida 10% y zinc 1%.',
     'Sérum incluido en la galería de imágenes del proyecto. Revisa las instrucciones del fabricante.',
-    './images/The Ordinary Niacinamide 10% + Zinc 1%, Smoothing Serum for Blemish-Prone Skin_.jfif'
+    './images/the-ordinary-niacinamide.jfif'
   );
 
 INSERT INTO eventos (titulo, fecha, tipo, descripcion) VALUES
@@ -54,3 +56,15 @@ INSERT INTO eventos (titulo, fecha, tipo, descripcion) VALUES
   ('Entrega del proyecto web', NULL, 'Entrega', 'Fecha por confirmar con el docente.'),
   ('Exposición del proyecto y galería multimedia', NULL, 'Exposición', 'Fecha por confirmar con el docente.'),
   ('Evaluación y retroalimentación', NULL, 'Evaluación', 'Fecha por confirmar con el docente.');
+
+INSERT INTO noticias (categoria, titulo, contenido)
+SELECT 'HTML', 'Una web clara empieza con buena estructura', 'Usar etiquetas como header, nav, main y section ayuda a organizar el contenido y facilita la navegación.'
+WHERE NOT EXISTS (SELECT 1 FROM noticias WHERE titulo = 'Una web clara empieza con buena estructura');
+
+INSERT INTO noticias (categoria, titulo, contenido)
+SELECT 'DISEÑO RESPONSIVE', 'Diseñar para móvil también es diseñar para todos', 'Una presentación que se adapta a distintos tamaños hace que las recomendaciones sean fáciles de consultar.'
+WHERE NOT EXISTS (SELECT 1 FROM noticias WHERE titulo = 'Diseñar para móvil también es diseñar para todos');
+
+INSERT INTO noticias (categoria, titulo, contenido)
+SELECT 'TECNOLOGÍA', 'De una maqueta a una aplicación web', 'HTML da la estructura; CSS, JavaScript, PHP y una base de datos pueden ampliar el proyecto en próximas etapas.'
+WHERE NOT EXISTS (SELECT 1 FROM noticias WHERE titulo = 'De una maqueta a una aplicación web');

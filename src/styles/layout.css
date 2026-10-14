@@ -70,6 +70,8 @@
 
 .contact-section { padding: 80px max(5vw, calc((100vw - 1200px) / 2)); display: grid; grid-template-columns: 1fr 1fr; gap: 12%; background: #202a24; color: white; }
 
+.site-footer .contact-section { padding: 45px 0; margin-bottom: 24px; border-bottom: 1px solid #414a42; background: transparent; }
+
 .site-footer { padding: 30px max(5vw, calc((100vw - 1200px) / 2)) 17px; background: #171f1a; color: white; }
 
 .footer-main { display: grid; grid-template-columns: 1fr 1fr 1.5fr; align-items: center; gap: 24px; padding-bottom: 24px; }

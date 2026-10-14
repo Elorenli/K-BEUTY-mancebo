@@ -1,10 +1,26 @@
 <footer class="site-footer">
+  <section class="contact-section" id="contacto">
+    <div class="contact-copy">
+      <p class="eyebrow">CONTACTO DEL PROYECTO</p><h2>¿Tienes una idea<br /><em>o recomendación?</em></h2>
+      <p>Comparte una pregunta o sugerencia para seguir mejorando esta práctica de maquetación.</p>
+      <div class="contact-detail"><span>DOCENTE</span><b>José María Mancebo</b></div>
+      <div class="contact-detail"><span>INSTITUCIÓN</span><b>Instituto Politécnico Industrial Don Bosco</b></div>
+    </div>
+    <form class="contact-form" id="contact-form">
+      <label for="contact-name">Nombre</label><input id="contact-name" name="name" type="text" placeholder="Escribe tu nombre" autocomplete="name" minlength="2" required />
+      <label for="contact-email">Correo electrónico</label><input id="contact-email" name="email" type="email" placeholder="tu@correo.com" autocomplete="email" required />
+      <label for="contact-message">Mensaje</label><textarea id="contact-message" name="message" rows="4" placeholder="Escribe tu mensaje" minlength="10" required></textarea>
+      <button class="button button-dark" type="submit">Enviar mensaje <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></button>
+      <p class="form-note" id="contact-status" role="status" aria-live="polite"></p>
+      <small>Los mensajes se guardan en la base de datos del proyecto.</small>
+    </form>
+  </section>
   <div class="footer-main">
     <a class="school-logo footer-logo" href="#inicio"><img class="school-logo-image" src="./images/image.png" alt="Logo institucional del IPIDBOSCO" /><span class="school-logo-copy"><b>IPIDB</b><small>Proyecto web estudiantil</small></span></a>
     <p>Aprende, crea y cuida.<br /><span>Una práctica estudiantil sobre skincare y desarrollo web.</span></p>
     <nav aria-label="Enlaces del pie de página">
-      <a href="#nosotros">Nosotros</a><a href="#servicios">Servicios</a><a href="#portafolio">Portafolio</a>
-      <a href="#eventos">Eventos</a><a href="#contacto">Contacto</a><button id="open-admin" type="button">Administración</button>
+      <a href="#equipo">Nosotras</a><a href="#servicios">Servicios</a><a href="#portafolio">Portafolio</a>
+      <a href="#eventos">Eventos</a><a href="#contacto">Contacto</a><button id="open-admin" type="button">Iniciar sesión / Crear cuenta</button>
     </nav>
   </div>
   <div class="footer-bottom"><span>Docente: José María Mancebo</span><span>Módulo: Desarrollo e Implementación de Soluciones Web y Multimedia</span><span>Actividad 1.1 · Maquetación HTML</span></div>

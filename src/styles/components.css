@@ -20,6 +20,40 @@
 
 .about-card p, .service-card p, .gallery-project p, .journal-card p, .media-card>p:not(.eyebrow), .map-card>p:not(.eyebrow) { color: var(--muted); font-size: 10px; line-height: 1.8; }
 
+.team-profiles { margin-top: 30px; scroll-margin-top: 90px; }
+
+.team-profiles-heading { margin-bottom: 17px; display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+
+.team-profiles-heading .eyebrow { margin-bottom: 7px; }
+
+.team-profiles-heading h3 { margin: 0; font-family: "Playfair Display", serif; font-size: 25px; font-weight: 500; }
+
+.team-profiles-heading>p { max-width: 390px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.8; }
+
+.team-profile-list { display: grid; gap: 14px; }
+
+.team-profile-card { min-width: 0; display: grid; grid-template-columns: minmax(180px, .55fr) 1fr; background: #f0f1e9; }
+
+.team-profile-photo { min-height: 225px; margin: 0; overflow: hidden; background: #dce5c5; }
+
+.team-profile-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+
+.team-profile-card-sandra .team-profile-photo img { object-position: center 18%; }
+
+.team-profile-copy { padding: clamp(20px, 3vw, 32px); align-self: center; }
+
+.team-profile-copy .eyebrow { margin-bottom: 8px; }
+
+.team-profile-copy h4 { margin: 0 0 16px; font-family: "Playfair Display", serif; font-size: clamp(23px, 2.6vw, 31px); font-weight: 500; }
+
+.team-profile-facts { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+
+.team-profile-facts>div:last-child { grid-column: 1 / -1; }
+
+.team-profile-facts dt { margin-bottom: 4px; color: var(--green-dark); font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+
+.team-profile-facts dd { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+
 .service-card { min-height: 255px; padding: 24px; display: flex; flex-direction: column; align-items: flex-start; border-right: 1px solid #d9ddd1; }
 
 .service-card:last-child { border: 0; }
@@ -114,6 +148,8 @@
 
 .image-gallery { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 
+.project-activities { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
 .image-gallery article { min-width: 0; }
 
 .image-gallery figure { height: clamp(190px, 23vw, 280px); margin: 0; position: relative; overflow: hidden; background: #e8e8e2; }
@@ -158,15 +194,25 @@
 
 .media-card, .map-card { min-width: 0; padding: 22px; background: #f1f2eb; }
 
-.media-card h3, .map-card h3 { margin: 0; font-family: "Playfair Display", serif; font-size: 23px; font-weight: 500; }
+.media-card h3, .map-card h3, .group-photo-card h3 { margin: 0; font-family: "Playfair Display", serif; font-size: 23px; font-weight: 500; }
 
-.media-card>p:not(.eyebrow), .map-card>p:not(.eyebrow) { margin: 8px 0 15px; }
+.media-card>p:not(.eyebrow), .map-card>p:not(.eyebrow), .group-photo-card>p:not(.eyebrow) { margin: 8px 0 15px; color: var(--muted); font-size: 10px; line-height: 1.8; }
 
 .map-card iframe { width: 100%; height: 160px; border: 0; background: #e1e5d7; }
 
 .map-card>a { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 8px; font-weight: 700; }
 
 .project-video { width: 100%; max-height: 360px; margin-top: 14px; aspect-ratio: 16 / 9; background: #202a24; object-fit: contain; }
+
+.group-photo-card { min-width: 0; padding: 22px; background: #f1f2eb; }
+
+.group-photo-card .eyebrow { margin-bottom: 8px; }
+
+.group-photo { height: 100%; min-height: 220px; max-height: 360px; margin: 14px 0 0; position: relative; overflow: hidden; background: #dce5c5; }
+
+.group-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
+
+.group-photo figcaption { position: absolute; right: 10px; bottom: 10px; left: 10px; width: fit-content; padding: 7px 9px; background: #fbfaf7ed; color: var(--green-dark); font-size: 8px; font-weight: 700; letter-spacing: .1em; }
 
 .video-picker { width: fit-content; min-height: 36px; padding: 0 12px; display: inline-flex; align-items: center; background: var(--ink); color: white; font-size: 9px; font-weight: 700; cursor: pointer; }
 

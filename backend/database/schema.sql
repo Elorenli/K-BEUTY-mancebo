@@ -1,3 +1,5 @@
+SET NAMES utf8mb4;
+
 CREATE DATABASE IF NOT EXISTS seoul_glow CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE seoul_glow;
 
@@ -23,7 +25,7 @@ CREATE TABLE categorias (
 );
 
 CREATE TABLE productos (
-  id INT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(150) NOT NULL,
   marca_id INT NOT NULL,
   categoria_id INT NOT NULL,
@@ -58,6 +60,7 @@ CREATE TABLE pedido_items (
 
 CREATE TABLE noticias (
   id INT AUTO_INCREMENT PRIMARY KEY,
+  categoria VARCHAR(80) NOT NULL DEFAULT 'General',
   titulo VARCHAR(150) NOT NULL,
   contenido TEXT NOT NULL,
   creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP

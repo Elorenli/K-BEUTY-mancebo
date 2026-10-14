@@ -1,11 +1,31 @@
+import { apiRequest } from "./api.js";
+
 export function initContactForm() {
-  document.querySelector("#contact-form").addEventListener("submit", (event) => {
+  const form = document.querySelector("#contact-form");
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
     const status = document.querySelector("#contact-status");
     if (!form.reportValidity()) return;
-    status.textContent = "Los campos son válidos. Este formulario es una maqueta y aún no envía ni guarda mensajes.";
-    form.reset();
-    // Integración futura: reemplazar esta respuesta local por un envío a POST /api/contact.
+    const submit = form.querySelector('[type="submit"]');
+    const data = new FormData(form);
+    submit.disabled = true;
+    status.textContent = "Enviando mensaje…";
+    try {
+      const result = await apiRequest("contacto.php", {
+        method: "POST",
+        body: {
+          nombre: data.get("name"),
+          correo: data.get("email"),
+          mensaje: data.get("message"),
+        },
+      });
+      status.textContent = result.message;
+      form.reset();
+    } catch (error) {
+      console.error("No se pudo guardar el mensaje de contacto.", error);
+      status.textContent = error.message;
+    } finally {
+      submit.disabled = false;
+    }
   });
 }

@@ -72,6 +72,12 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .about-card { min-height: auto; padding: 20px; border-right: 0; border-bottom: 1px solid var(--line); }
   .about-card:last-child { border-bottom: 0; }
   .about-card h3 { margin-top: 18px; }
+  .team-profiles-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .team-profile-card { grid-template-columns: minmax(115px, .75fr) 1fr; }
+  .team-profile-photo { min-height: 230px; }
+  .team-profile-copy { padding: 18px 15px; }
+  .team-profile-facts { grid-template-columns: 1fr; gap: 10px; }
+  .team-profile-facts>div:last-child { grid-column: auto; }
   .service-grid { grid-template-columns: 1fr; }
   .service-card { min-height: 205px; border-right: 0; border-bottom: 1px solid #d9ddd1; }
   .service-card:last-child { border-bottom: 0; }
@@ -115,6 +121,11 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .course-strip { grid-template-columns: 1fr; }
   .course-strip>div, .course-strip>div:nth-child(3) { padding-left: 11px; border-left: 1px solid #566057; }
   .portfolio-grid { grid-template-columns: 1fr; }
+  .team-profile-card { grid-template-columns: 1fr; }
+  .team-profile-photo { height: 260px; min-height: 0; }
+  .team-profile-copy { padding: 21px; }
+  .team-profile-facts { grid-template-columns: 1fr 1fr; }
+  .team-profile-facts>div:last-child { grid-column: 1 / -1; }
   .image-gallery { grid-template-columns: 1fr; }
   .image-gallery figure { height: 250px; }
   .recommendation-card:last-child { grid-column: auto; }

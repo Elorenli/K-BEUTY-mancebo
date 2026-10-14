@@ -56,7 +56,7 @@ const initialProducts = [
     category: "SÉRUM",
     title: "The Ordinary Niacinamide 10% + Zinc 1%",
     description: "Sérum de niacinamida incluido en la galería de productos del proyecto.",
-    image: "./images/The Ordinary Niacinamide 10% + Zinc 1%, Smoothing Serum for Blemish-Prone Skin_.jfif",
+    image: "./images/the-ordinary-niacinamide.jfif",
     alt: "Sérum The Ordinary Niacinamide 10% + Zinc 1%",
     content: "Fórmula con niacinamida y zinc. Consulta el envase para confirmar ingredientes y concentración.",
     advantages: "Su etiqueta permite practicar la lectura y comparación de ingredientes.",
@@ -68,6 +68,32 @@ const initialProducts = [
 
 const storageKey = "ipidb-demo-products";
 let products = loadProducts();
+
+function resolveProductImage(image) {
+  if (!image?.startsWith("./images/")) return image;
+
+  const filename = image.slice("./images/".length);
+  let decodedFilename = filename;
+  try {
+    decodedFilename = decodeURIComponent(filename);
+  } catch {
+    // Encode malformed percent sequences as literal filename characters.
+  }
+  if (decodedFilename.startsWith("The Ordinary Niacinamide 10% + Zinc 1%")) {
+    return "./images/the-ordinary-niacinamide.jfif";
+  }
+  return `./images/${encodeURIComponent(decodedFilename)}`;
+}
+
+function addProductImageFallback(image) {
+  const fallbackImage = resolveProductImage("./images/descarga%20(1).jfif");
+  image.addEventListener("error", () => {
+    if (image.dataset.fallbackApplied === "true") return;
+    image.dataset.fallbackApplied = "true";
+    image.src = fallbackImage;
+    image.alt = "Selección de productos para el cuidado de la piel";
+  });
+}
 
 function loadProducts() {
   try {
@@ -106,7 +132,7 @@ export async function loadProductsFromApi() {
       category: product.categoria,
       title: product.nombre,
       alt: `Producto ${product.nombre}`,
-      image: product.imagen || initialProducts[index % initialProducts.length].image,
+      image: resolveProductImage(product.imagen || initialProducts[index % initialProducts.length].image),
       source: "database",
     }));
 
@@ -127,8 +153,10 @@ export function renderRecommendations(items = products) {
   const template = document.querySelector("#recommendation-template");
   grid.replaceChildren(...items.map((product) => {
     const card = template.content.cloneNode(true);
-    card.querySelector(".recommendation-image img").src = product.image;
-    card.querySelector(".recommendation-image img").alt = product.alt;
+    const image = card.querySelector(".recommendation-image img");
+    addProductImageFallback(image);
+    image.src = resolveProductImage(product.image);
+    image.alt = product.alt;
     card.querySelector(".product-number").textContent = product.number;
     card.querySelector(".product-category").textContent = product.category;
     card.querySelector(".product-title").textContent = product.title;
