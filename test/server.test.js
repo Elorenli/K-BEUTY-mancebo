@@ -124,11 +124,18 @@ test("API de sitio y panel con SQLite", async (t) => {
   }, authenticatedHeaders);
   assert.equal(newProductResponse.status, 201);
   const newProductId = (await newProductResponse.json()).id;
+  const savedProducts = await (await request("products")).json();
+  const savedProduct = savedProducts.find((product) => product.id === newProductId);
+  assert.equal(savedProduct.nombre, "Producto de prueba");
+  assert.equal(savedProduct.marca, "SKIN1004");
+  assert.equal(savedProduct.categoria, "Sérums");
   const deleteProduct = await request(`products?id=${newProductId}`, {
     method: "DELETE",
     headers: authenticatedHeaders,
   });
   assert.equal(deleteProduct.status, 200);
+  const remainingProducts = await (await request("products")).json();
+  assert.equal(remainingProducts.some((product) => product.id === newProductId), false);
 
   const newArticle = await post("news", { tag: "TEST", title: "Noticia de prueba", text: "Contenido de prueba." }, authenticatedHeaders);
   assert.equal(newArticle.status, 201);
