@@ -1,47 +1,51 @@
-# Seoul Glow: catálogo conectado a MySQL
+# Seoul Glow: catálogo con Node.js y SQLite
 
 ## Requisitos
 
-- Node.js y pnpm (o npm).
-- PHP 8.1 o posterior con las extensiones `pdo_mysql` y `mbstring`.
-- MySQL 8 o compatible.
+- Node.js 22.5 o posterior y npm (o pnpm).
 
-## Preparar la base de datos
+No necesitas instalar ni iniciar XAMPP, PHP o MySQL. La primera ejecución crea automáticamente una base de datos SQLite local en `data/seoul-glow.sqlite` y carga los datos iniciales del catálogo.
 
-1. Inicia MySQL y crea la base de datos importando `backend/database/schema.sql`.
-2. Importa `backend/database/seed.sql` para cargar el catálogo de ejemplo.
-3. Copia `.env.example` a `.env` y ajusta `DB_HOST`, `DB_NAME`, `DB_USER` y `DB_PASSWORD`. Pon entre comillas los valores que contengan `;` o `#`. El archivo `.env` solo se lee en PHP y no se publica.
-4. Crea una cuenta de administrador desde la raíz del proyecto con `php backend/scripts/create-admin.php`. La contraseña se solicita en la terminal y debe tener al menos 12 caracteres.
-
-Si ya tenías instalada una versión anterior de la base de datos, ejecuta **una sola vez** `backend/database/migration_backend.sql` antes de iniciar el servidor. En una base nueva no ejecutes esa migración: los cambios ya están incluidos en `schema.sql`.
-
-Los archivos SQL establecen `utf8mb4` para conservar las tildes y la `ñ`. Si ya importaste datos desde una terminal de Windows y aparecen letras dañadas, importa una vez `backend/database/fix_seed_text.sql` para reparar los textos de ejemplo existentes.
-
-## Iniciar el sitio y el servidor
-
-Abre dos terminales en la raíz del proyecto:
+## Iniciar el sitio y la API
 
 ```sh
-pnpm dev:api
+npm install
+npm run dev:all
 ```
+
+El comando inicia juntos el servidor Node.js y Vite. Abre la dirección que muestre Vite, normalmente `http://127.0.0.1:5173`. Para iniciarlos por separado, usa `npm run dev:api` y `npm run dev` en dos terminales. La API está disponible en `http://127.0.0.1:8000/api/health`.
+
+## Crear una cuenta administradora
 
 ```sh
-pnpm dev
+npm run create-admin
 ```
 
-Abre la dirección que muestre Vite (normalmente `http://localhost:5173`). Vite reenvía `/api` a PHP en `http://127.0.0.1:8000`. También puedes comprobar la API directamente en `http://127.0.0.1:8000/api/productos.php` y `http://127.0.0.1:8000/api/eventos.php`.
+El comando pide el nombre, el correo y una contraseña de al menos 12 caracteres. Después, abre **Administración** e inicia sesión con ese correo y contraseña. Al cambiar de MySQL a SQLite, la cuenta y los datos guardados en la antigua base de XAMPP no se copian; crea una cuenta nueva para esta base SQLite.
+
+La base local se conserva entre reinicios y está excluida de Git. Para empezar de nuevo, detén el servidor y elimina únicamente `data/seoul-glow.sqlite` y sus archivos `data/seoul-glow.sqlite-*`; la próxima ejecución la vuelve a crear con los datos iniciales.
+
+El registro público solo crea cuentas de cliente. Las acciones administrativas están protegidas por sesión, rol de administrador y token CSRF. Las contraseñas se derivan con scrypt y no hay credenciales predeterminadas. Los errores internos se registran en la consola del servidor, no se envían al navegador.
+
+## Dónde cambiar el proyecto
+
+- `public/partials/`: una plantilla HTML por sección de la web. Cambia `team.html` para editar los datos y las fotos de las integrantes, y `about.html` para la descripción y la información académica.
+- `src/styles/base.css`: colores globales, tipografía y estilos base.
+- `src/styles/layout.css`: cabecera, pie de página y estructura del panel.
+- `src/styles/components.css`: componentes de las secciones y del catálogo.
+- `src/styles/team.css`: diseño y adaptación a móvil de las fichas del equipo.
+- `src/styles/sections.css`: fondos y distribución adaptable de las secciones principales.
+- `src/js/partials.js`: lista de plantillas HTML que se cargan en la página.
+- `src/js/`: comportamiento de navegación, catálogo, formularios, autenticación y panel.
+- `server/`: API Node.js, base SQLite y autenticación.
+- `scripts/`: comandos de desarrollo y creación de la cuenta administradora.
 
 ## API
 
-- `GET /api/productos.php`: catálogo; requiere base de datos.
-- `GET /api/eventos.php`: calendario académico.
-- `GET /api/noticias.php`: noticias públicas.
-- `POST /api/contacto.php`: valida y guarda mensajes del formulario.
-- `GET /api/catalogos.php`: marcas y categorías para el panel.
-- `POST /api/auth/register.php`: crea una cuenta de cliente. El formulario del sitio permite registrarse y entrar con una cuenta existente.
-- `POST /api/auth/login.php`, `GET /api/auth/session.php` y `POST /api/auth/logout.php`: inicio, consulta y cierre de sesión para clientes y administradores.
-- `/api/productos.php`, `/api/noticias.php` y `/api/usuarios.php`: operaciones administrativas protegidas por sesión y token CSRF.
+- `GET /api/health`: estado de la API y conexión SQLite.
+- `GET /api/products`, `GET /api/news`, `GET /api/events` y `GET /api/catalogs`: datos públicos del sitio.
+- `POST /api/contact`: valida y guarda mensajes del formulario.
+- `/api/auth/login`, `/api/auth/session`, `/api/auth/logout` y `POST /api/auth/register`: autenticación y registro público de clientes.
+- `/api/products`, `/api/news` y `/api/users`: gestión administrativa protegida por sesión y token CSRF.
 
-El registro público solo crea cuentas con rol cliente. Las operaciones del panel siguen disponibles únicamente para cuentas con rol administrador; el registro no permite crear administradores. Las contraseñas se guardan con `password_hash`; no hay contraseñas predeterminadas ni credenciales de demostración. El servidor registra los errores internos en el log de PHP y no los devuelve al navegador.
-
-Las actividades sin fecha confirmada se guardan con `fecha` nula y se muestran como **Por confirmar**; actualiza esa columna cuando el docente confirme el calendario. En la sección multimedia se pueden seleccionar videos para previsualizarlos localmente; no se cargan al servidor.
+Las actividades sin fecha confirmada se guardan con fecha nula y se muestran como **Por confirmar**. En la sección multimedia se pueden seleccionar videos para previsualizarlos localmente; no se cargan al servidor.

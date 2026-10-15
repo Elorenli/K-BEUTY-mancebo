@@ -166,10 +166,10 @@ function renderAdmin() {
 
 async function refreshData() {
   const [products, news, users, catalogs] = await Promise.all([
-    apiRequest("productos.php"),
-    apiRequest("noticias.php"),
-    apiRequest("usuarios.php"),
-    apiRequest("catalogos.php"),
+    apiRequest("products"),
+    apiRequest("news"),
+    apiRequest("users"),
+    apiRequest("catalogs"),
   ]);
   if (![products, news, users].every(Array.isArray)) {
     throw new Error("El servidor devolvió datos administrativos en un formato inesperado.");
@@ -207,7 +207,7 @@ function enterAdmin() {
 async function exitAdmin() {
   state.error = "";
   try {
-    await apiRequest("auth/logout.php", { method: "POST" });
+    await apiRequest("auth/logout", { method: "POST" });
     window.dispatchEvent(new Event("auth:logout"));
     adminView.hidden = true;
     siteView.hidden = false;
@@ -251,7 +251,7 @@ function handleAdminAction(event) {
 }
 
 async function deleteRecord(kind, id) {
-  const endpoint = kind === "product" ? "productos.php" : kind === "article" ? "noticias.php" : "usuarios.php";
+  const endpoint = kind === "product" ? "products" : kind === "article" ? "news" : "users";
   try {
     await apiRequest(`${endpoint}?id=${encodeURIComponent(id)}`, { method: "DELETE" });
     state.message = "Registro eliminado del servidor.";
@@ -269,7 +269,7 @@ async function handleRecordSubmit(event) {
   const data = Object.fromEntries(new FormData(form).entries());
   for (const key in data) data[key] = String(data[key]).trim();
   const { kind, original } = state.editing;
-  const endpoint = kind === "product" ? "productos.php" : kind === "article" ? "noticias.php" : "usuarios.php";
+  const endpoint = kind === "product" ? "products" : kind === "article" ? "news" : "users";
   const method = original ? "PUT" : "POST";
   if (original) data.id = original.id;
 

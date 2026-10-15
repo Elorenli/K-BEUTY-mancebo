@@ -11,7 +11,7 @@ export function initContactForm() {
     submit.disabled = true;
     status.textContent = "Enviando mensaje…";
     try {
-      const result = await apiRequest("contacto.php", {
+      const result = await apiRequest("contact", {
         method: "POST",
         body: {
           nombre: data.get("name"),

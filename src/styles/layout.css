@@ -18,9 +18,11 @@
 
 .main-nav { display: flex; align-items: center; gap: clamp(15px, 2.1vw, 28px); }
 
-.main-nav a, .header-cta { font-size: 10px; font-weight: 600; }
+.main-nav a, .main-nav button, .header-cta { font-size: 10px; font-weight: 600; }
 
-.main-nav a:hover, .site-footer a:hover { color: var(--green-dark); }
+.main-nav a:hover, .main-nav button:hover, .site-footer a:hover { color: var(--green-dark); }
+
+.main-nav .admin-entry { padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; }
 
 .header-cta { display: flex; align-items: center; gap: 9px; padding: 12px 14px; background: var(--ink); color: #fff; }
 

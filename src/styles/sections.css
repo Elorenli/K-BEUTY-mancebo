@@ -41,7 +41,7 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
 @media (max-width: 1050px) {
   .site-header { padding-right: 4vw; padding-left: 4vw; }
   .main-nav { gap: 14px; }
-  .main-nav a { font-size: 9px; }
+  .main-nav a, .main-nav button { font-size: 9px; }
   .header-cta { padding: 11px; font-size: 8px; }
   .course-strip { grid-template-columns: 1fr 1.3fr; row-gap: 20px; }
   .course-strip>div:nth-child(3) { padding-left: 0; border: 0; }
@@ -59,7 +59,7 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .menu-button span { width: 20px; height: 1px; background: var(--ink); }
   .main-nav { position: absolute; top: 67px; right: 0; left: 0; padding: 12px 5% 18px; display: none; align-items: stretch; flex-direction: column; gap: 0; transform: none; background: #fbfaf7; border-bottom: 1px solid var(--line); }
   .main-nav.nav-open { display: flex; }
-  .main-nav a { padding: 11px 0; border-bottom: 1px solid #eceee8; font-size: 11px; }
+  .main-nav a, .main-nav button { padding: 11px 0; border-bottom: 1px solid #eceee8; font-size: 11px; text-align: left; }
   .hero { grid-template-columns: 1fr; }
   .hero-copy { padding: 60px 7%; }
   .hero-visual { min-height: 390px; }
@@ -72,12 +72,6 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .about-card { min-height: auto; padding: 20px; border-right: 0; border-bottom: 1px solid var(--line); }
   .about-card:last-child { border-bottom: 0; }
   .about-card h3 { margin-top: 18px; }
-  .team-profiles-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
-  .team-profile-card { grid-template-columns: minmax(115px, .75fr) 1fr; }
-  .team-profile-photo { min-height: 230px; }
-  .team-profile-copy { padding: 18px 15px; }
-  .team-profile-facts { grid-template-columns: 1fr; gap: 10px; }
-  .team-profile-facts>div:last-child { grid-column: auto; }
   .service-grid { grid-template-columns: 1fr; }
   .service-card { min-height: 205px; border-right: 0; border-bottom: 1px solid #d9ddd1; }
   .service-card:last-child { border-bottom: 0; }
@@ -121,11 +115,6 @@ h1 em, h2 em { color: var(--green-dark); font-family: "Playfair Display", serif;
   .course-strip { grid-template-columns: 1fr; }
   .course-strip>div, .course-strip>div:nth-child(3) { padding-left: 11px; border-left: 1px solid #566057; }
   .portfolio-grid { grid-template-columns: 1fr; }
-  .team-profile-card { grid-template-columns: 1fr; }
-  .team-profile-photo { height: 260px; min-height: 0; }
-  .team-profile-copy { padding: 21px; }
-  .team-profile-facts { grid-template-columns: 1fr 1fr; }
-  .team-profile-facts>div:last-child { grid-column: 1 / -1; }
   .image-gallery { grid-template-columns: 1fr; }
   .image-gallery figure { height: 250px; }
   .recommendation-card:last-child { grid-column: auto; }

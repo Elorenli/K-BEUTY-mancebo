@@ -3,7 +3,7 @@ import { apiRequest } from "./api.js";
 export const articles = [
   { tag: "HTML", title: "Una web clara empieza con buena estructura", text: "Usar etiquetas como header, nav, main y section ayuda a organizar el contenido y facilita la navegación." },
   { tag: "DISEÑO RESPONSIVE", title: "Diseñar para móvil también es diseñar para todos", text: "Una presentación que se adapta a distintos tamaños hace que las recomendaciones sean fáciles de consultar." },
-  { tag: "TECNOLOGÍA", title: "De una maqueta a una aplicación web", text: "HTML da la estructura; CSS, JavaScript, PHP y una base de datos pueden ampliar el proyecto en próximas etapas." },
+  { tag: "TECNOLOGÍA", title: "De una maqueta a una aplicación web", text: "HTML da la estructura; CSS, JavaScript, Node.js y una base de datos pueden ampliar el proyecto en próximas etapas." },
 ];
 
 const events = [
@@ -31,7 +31,7 @@ export function renderArticles(items = articles) {
 
 export async function loadNewsFromApi() {
   try {
-    const data = await apiRequest("noticias.php");
+    const data = await apiRequest("news");
     if (!Array.isArray(data)) throw new Error("La API devolvió un formato inesperado.");
     renderArticles(data);
     return data;
@@ -67,7 +67,7 @@ export async function loadEventsFromApi() {
   const status = document.querySelector("#events-status");
 
   try {
-    const response = await fetch(`${import.meta.env.BASE_URL}api/eventos.php`, {
+    const response = await fetch(`${import.meta.env.BASE_URL}api/events`, {
       headers: { Accept: "application/json" },
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -83,7 +83,7 @@ export async function loadEventsFromApi() {
     })));
     return true;
   } catch (error) {
-    console.error("No se pudo cargar el calendario desde la API PHP.", error);
+    console.error("No se pudo cargar el calendario desde la API.", error);
     renderEvents();
     status.textContent = "No se pudo conectar con el calendario de la base de datos. Se muestran las actividades de ejemplo.";
     return false;

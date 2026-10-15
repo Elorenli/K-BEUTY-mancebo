@@ -3,9 +3,7 @@ import { apiRequest, setCsrfToken } from "./api.js";
 export function initAuth(onAuthenticated) {
   const overlay = document.querySelector("#admin-login-overlay");
   const loginForm = document.querySelector("#admin-login-form");
-  const registerForm = document.querySelector("#admin-register-form");
   const loginError = document.querySelector("#login-error");
-  const registerError = document.querySelector("#register-error");
   const status = document.querySelector("#auth-status");
   const forms = document.querySelector("#auth-forms");
   const loggedIn = document.querySelector("#auth-logged-in");
@@ -15,25 +13,8 @@ export function initAuth(onAuthenticated) {
 
   function showLogin(message = "") {
     loginForm.hidden = false;
-    registerForm.hidden = true;
-    document.querySelector("#show-login").setAttribute("aria-pressed", "true");
-    document.querySelector("#show-register").setAttribute("aria-pressed", "false");
-    document.querySelector("#admin-login-title").textContent = "Inicia sesión";
     status.textContent = message;
     loginError.hidden = true;
-    registerError.hidden = true;
-  }
-
-  function showRegister() {
-    loginForm.hidden = true;
-    registerForm.hidden = false;
-    document.querySelector("#show-login").setAttribute("aria-pressed", "false");
-    document.querySelector("#show-register").setAttribute("aria-pressed", "true");
-    document.querySelector("#admin-login-title").textContent = "Crear cuenta";
-    status.textContent = "";
-    loginError.hidden = true;
-    registerError.hidden = true;
-    registerForm.querySelector('[name="name"]').focus();
   }
 
   function showSignedIn(user) {
@@ -43,28 +24,25 @@ export function initAuth(onAuthenticated) {
     const isAdmin = user.rol === "admin";
     welcome.textContent = isAdmin
       ? `Hola, ${user.nombre}. Iniciaste sesión como administradora.`
-      : `Hola, ${user.nombre}. Iniciaste sesión con tu cuenta de cliente.`;
-    openButton.textContent = isAdmin ? "Administración" : "Mi cuenta";
+      : `Hola, ${user.nombre}.`;
+    openButton.textContent = "Administración";
   }
 
   function showSignedOut() {
     forms.hidden = false;
     loggedIn.hidden = true;
-    description.textContent = "Entra a tu cuenta o crea una nueva para este sitio.";
-    openButton.textContent = "Iniciar sesión / Crear cuenta";
+    description.textContent = "Ingresa con el correo y la contraseña de una cuenta administradora. Las cuentas de cliente no pueden acceder al panel.";
+    openButton.textContent = "Administración";
     showLogin();
   }
 
   openButton.addEventListener("click", () => {
     overlay.hidden = false;
     loginError.hidden = true;
-    registerError.hidden = true;
     if (!loggedIn.hidden) {
       document.querySelector("#auth-logout").focus();
-    } else if (!registerForm.hidden) {
-      registerForm.querySelector('[name="name"]').focus();
     } else {
-      loginForm.querySelector('[name="username"]').focus();
+      loginForm.querySelector('[name="email"]').focus();
     }
   });
 
@@ -80,9 +58,6 @@ export function initAuth(onAuthenticated) {
     if (event.key === "Escape" && !overlay.hidden) overlay.hidden = true;
   });
 
-  document.querySelector("#show-login").addEventListener("click", () => showLogin());
-  document.querySelector("#show-register").addEventListener("click", showRegister);
-
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const submit = loginForm.querySelector('[type="submit"]');
@@ -91,9 +66,9 @@ export function initAuth(onAuthenticated) {
     loginError.hidden = true;
     status.textContent = "Verificando tus datos…";
     try {
-      const result = await apiRequest("auth/login.php", {
+      const result = await apiRequest("auth/login", {
         method: "POST",
-        body: { correo: data.get("username"), password: data.get("password") },
+        body: { correo: data.get("email"), password: data.get("password") },
       });
       setCsrfToken(result.csrfToken);
       loginForm.reset();
@@ -101,7 +76,11 @@ export function initAuth(onAuthenticated) {
         overlay.hidden = true;
         onAuthenticated(result.user);
       } else {
-        showSignedIn(result.user);
+        await apiRequest("auth/logout", { method: "POST" });
+        setCsrfToken(null);
+        showLogin();
+        loginError.textContent = "Esta cuenta no tiene permisos de administración. Usa una cuenta administradora.";
+        loginError.hidden = false;
       }
     } catch (error) {
       status.textContent = "";
@@ -112,42 +91,11 @@ export function initAuth(onAuthenticated) {
     }
   });
 
-  registerForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const submit = registerForm.querySelector('[type="submit"]');
-    const data = new FormData(registerForm);
-    submit.disabled = true;
-    registerError.hidden = true;
-    status.textContent = "Creando tu cuenta…";
-    try {
-      const result = await apiRequest("auth/register.php", {
-        method: "POST",
-        body: {
-          nombre: data.get("name"),
-          correo: data.get("email"),
-          password: data.get("password"),
-          confirmacion: data.get("confirmacion"),
-        },
-      });
-      const email = data.get("email");
-      registerForm.reset();
-      showLogin(result.message);
-      loginForm.querySelector('[name="username"]').value = email;
-      loginForm.querySelector('[name="password"]').focus();
-    } catch (error) {
-      status.textContent = "";
-      registerError.textContent = error.message;
-      registerError.hidden = false;
-    } finally {
-      submit.disabled = false;
-    }
-  });
-
   document.querySelector("#auth-logout").addEventListener("click", async (event) => {
     const button = event.currentTarget;
     button.disabled = true;
     try {
-      await apiRequest("auth/logout.php", { method: "POST" });
+      await apiRequest("auth/logout", { method: "POST" });
       setCsrfToken(null);
       showSignedOut();
       status.textContent = "Has cerrado sesión.";
@@ -164,11 +112,19 @@ export function initAuth(onAuthenticated) {
   });
 
   showSignedOut();
-  apiRequest("auth/session.php").then((result) => {
+  apiRequest("auth/session").then((result) => {
     if (!result.user) return;
     setCsrfToken(result.csrfToken);
-    showSignedIn(result.user);
-    if (result.user.rol === "admin") onAuthenticated(result.user);
+    if (result.user.rol === "admin") {
+      showSignedIn(result.user);
+      onAuthenticated(result.user);
+      return;
+    }
+    return apiRequest("auth/logout", { method: "POST" }).then(() => {
+      setCsrfToken(null);
+      showSignedOut();
+      status.textContent = "La cuenta activa no tiene permisos de administración.";
+    });
   }).catch((error) => {
     console.error("No se pudo verificar la sesión de usuario.", error);
   });

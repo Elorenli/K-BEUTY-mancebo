@@ -118,7 +118,7 @@ export async function loadProductsFromApi() {
   const status = document.querySelector("#products-status");
 
   try {
-    const response = await fetch(`${import.meta.env.BASE_URL}api/productos.php`, {
+    const response = await fetch(`${import.meta.env.BASE_URL}api/products`, {
       headers: { Accept: "application/json" },
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -142,7 +142,7 @@ export async function loadProductsFromApi() {
       : "El catálogo de la base de datos todavía no tiene productos.";
     return true;
   } catch (error) {
-    console.error("No se pudo cargar el catálogo desde la API PHP.", error);
+    console.error("No se pudo cargar el catálogo desde la API.", error);
     status.textContent = "No se pudo conectar con el catálogo de la base de datos. Se muestran recomendaciones de ejemplo.";
     return false;
   }

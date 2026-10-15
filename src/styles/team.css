@@ -1,0 +1,52 @@
+.team-section { background: #fbfaf7; }
+
+.team-profiles { scroll-margin-top: 90px; }
+
+.team-profiles-heading { margin-bottom: 24px; display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+
+.team-profiles-heading .eyebrow { margin-bottom: 7px; }
+
+.team-profiles-heading h2 { margin: 0; font-family: "Playfair Display", serif; font-size: 25px; font-weight: 500; letter-spacing: 0; }
+
+.team-profiles-heading>p { max-width: 390px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.8; }
+
+.team-profile-list { display: grid; gap: 14px; }
+
+.team-profile-card { min-width: 0; display: grid; grid-template-columns: minmax(180px, .55fr) 1fr; background: #f0f1e9; }
+
+.team-profile-photo { min-height: 225px; margin: 0; overflow: hidden; background: #dce5c5; }
+
+.team-profile-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+
+.team-profile-card-sandra .team-profile-photo img { object-position: center 18%; }
+
+.team-profile-copy { padding: clamp(20px, 3vw, 32px); align-self: center; }
+
+.team-profile-copy .eyebrow { margin-bottom: 8px; }
+
+.team-profile-copy h3 { margin: 0 0 16px; font-family: "Playfair Display", serif; font-size: clamp(23px, 2.6vw, 31px); font-weight: 500; }
+
+.team-profile-facts { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+
+.team-profile-facts>div:last-child { grid-column: 1 / -1; }
+
+.team-profile-facts dt { margin-bottom: 4px; color: var(--green-dark); font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+
+.team-profile-facts dd { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+
+@media (max-width: 760px) {
+  .team-profiles-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .team-profile-card { grid-template-columns: minmax(115px, .75fr) 1fr; }
+  .team-profile-photo { min-height: 230px; }
+  .team-profile-copy { padding: 18px 15px; }
+  .team-profile-facts { grid-template-columns: 1fr; gap: 10px; }
+  .team-profile-facts>div:last-child { grid-column: auto; }
+}
+
+@media (max-width: 430px) {
+  .team-profile-card { grid-template-columns: 1fr; }
+  .team-profile-photo { height: 260px; min-height: 0; }
+  .team-profile-copy { padding: 21px; }
+  .team-profile-facts { grid-template-columns: 1fr 1fr; }
+  .team-profile-facts>div:last-child { grid-column: 1 / -1; }
+}

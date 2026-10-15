@@ -3,11 +3,18 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "dev": "vite",
-    "dev:api": "php -S 127.0.0.1:8000 -t backend",
+    "dev:api": "node server/index.js",
+    "dev:all": "node scripts/dev.js",
+    "start": "node server/index.js",
+    "create-admin": "node scripts/create-admin.js",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test"
   },
   "devDependencies": {
     "vite": "^8.0.5"

@@ -1,4 +1,4 @@
-const partialNames = ["header", "home", "about", "services", "portfolio", "resources", "events", "footer", "general"];
+const partialNames = ["header", "home", "about", "team", "services", "portfolio", "resources", "events", "footer", "general"];
 
 export async function loadPartials() {
   await Promise.all(partialNames.map(async (name) => {
